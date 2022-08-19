@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Shopping.API.Data
 {
-    public   class ProductContext
+    public class ProductContext
     {
         public IMongoCollection<Product> Products { get; }
         public ProductContext(IConfiguration configuration)
         {
             var client = new MongoClient(configuration["databaseSettings:ConnectionString"]);
-            var database= client.GetDatabase(configuration["databaseSettings:DatabaseName"]);
+            var database = client.GetDatabase(configuration["databaseSettings:DatabaseName"]);
             Products = database.GetCollection<Product>(configuration["databaseSettings:CollectionName"]);
             SeedData(Products);
 
@@ -22,7 +22,7 @@ namespace Shopping.API.Data
         private static void SeedData(IMongoCollection<Product> productcollection)
         {
             bool existproduct = productcollection.Find(X => true).Any();
-            if(! existproduct)
+            if (!existproduct)
             {
                 productcollection.InsertMany(GetPreconfiguredProducts());
             }
@@ -71,7 +71,7 @@ namespace Shopping.API.Data
                 },
                 new Product()
                 {
-                    Name = "LG G7 ThinQ EndofCourse",
+                    Name = "LG G7 ThinQ EndofCourse-test",
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     ImageFile = "product-6.png",
                     Price = 240.00M,
@@ -79,6 +79,6 @@ namespace Shopping.API.Data
                 }
             };
         }
-        
+
     }
 }
